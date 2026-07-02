@@ -1,217 +1,109 @@
 "use client";
 
-import { KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
-import { PortfolioView, usePortfolioView } from "@/components/view-context";
-
-const prompt = "biswayan@dev:~$";
-
-const supportedCommands = [
-  "help",
-  "about",
-  "projects",
-  "experience",
-  "skills",
-  "books",
-  "study",
-  "notes",
-  "search",
-  "resume",
-  "github",
-  "linkedin",
-  "theme",
-  "history",
-  "clear",
-  "status",
-];
-
-const viewCommands: Partial<Record<string, PortfolioView>> = {
-  about: "about",
-  books: "books",
-  experience: "experience",
-  notes: "notes",
-  projects: "projects",
-  skills: "skills",
-  study: "study",
-};
-
-const viewLabels: Record<PortfolioView, string> = {
-  about: "About",
-  books: "Books",
-  experience: "Experience",
-  home: "Bento Grid",
-  notes: "Notes",
-  projects: "Projects",
-  search: "Search",
-  skills: "Skills",
-  study: "Study Dashboard",
-};
+import * as React from "react";
+import { useRouter } from "next/navigation";
 
 type Entry =
-  | {
-      type: "command";
-      value: string;
-    }
-  | {
-      type: "response";
-      value: string;
-      pending?: boolean;
-    };
+  | { type: "command"; value: string }
+  | { type: "response"; value: React.ReactNode };
 
-const initialEntries: Entry[] = [
-  {
-    type: "response",
-    value: "Terminal ready. Type help to see available commands.",
-  },
-];
+const supportedCommands = ["help", "clear", "home", "books", "study", "notes", "projects", "github", "contact", "about"];
 
 export function TerminalPanel() {
-  const { openNote, openSearch, setActiveNoteQuery, setActiveView } =
-    usePortfolioView();
-  const [entries, setEntries] = useState<Entry[]>(initialEntries);
-  const [input, setInput] = useState("");
-  const [commandHistory, setCommandHistory] = useState<string[]>([]);
-  const [historyIndex, setHistoryIndex] = useState<number | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  const [input, setInput] = React.useState("");
+  const [commandHistory, setCommandHistory] = React.useState<string[]>([]);
+  const [historyIndex, setHistoryIndex] = React.useState(-1);
+  const [entries, setEntries] = React.useState<Entry[]>([
+    {
+      type: "response",
+      value: "Terminal ready. Type help to see available commands.",
+    },
+  ]);
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const scrollRef = React.useRef<HTMLDivElement>(null);
 
-  const responses = useMemo(
-    () => ({
-      help: `Available commands: ${supportedCommands.join(", ")}`,
-      resume: "Resume response placeholder: resume action is not connected yet.",
-      github: "GitHub response placeholder: external navigation is disabled for now.",
-      linkedin:
-        "LinkedIn response placeholder: external navigation is disabled for now.",
-      theme: "Theme response placeholder: theme switching will be wired later.",
-      status: "Status: terminal shell online, commands mocked, navigation disabled.",
-    }),
-    [],
-  );
-
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
-
-  useEffect(() => {
-    scrollRef.current?.scrollTo({
-      top: scrollRef.current.scrollHeight,
-      behavior: "smooth",
-    });
-  }, [entries, input]);
-
-  function focusInput() {
-    inputRef.current?.focus();
-  }
-
-  function getResponse(commandText: string) {
-    const [command, ...args] = commandText.trim().split(/\s+/);
-    const view = viewCommands[command];
-
-    if (!command) {
-      return "";
+  React.useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
+  }, [entries]);
 
-    if (command === "history") {
-      return commandHistory.length
-        ? commandHistory.map((item, index) => `${index + 1}  ${item}`).join("\n")
-        : "No command history yet.";
-    }
+  function handleCommand(cmd: string) {
+    const trimmed = cmd.trim();
+    if (!trimmed) return;
 
-    if (command === "search") {
-      const searchQuery = args.join(" ");
-      openSearch(searchQuery);
-      return searchQuery
-        ? `Searching everything for "${searchQuery}".`
-        : "Opening universal search.";
-    }
+    // Aliases
+    let parsedCmd = trimmed.toLowerCase();
+    if (parsedCmd === "ls") parsedCmd = "help";
+    if (parsedCmd === "cd") parsedCmd = "home";
 
-    if (command === "notes") {
-      const noteQuery = args.join(" ");
-      setActiveNoteQuery(noteQuery);
-      openNote(noteQuery);
-      return noteQuery
-        ? `Opening best note match for "${noteQuery}" in the right panel.`
-        : "Opening Notes in the right panel.";
-    }
+    const newEntries: Entry[] = [...entries, { type: "command", value: trimmed }];
 
-    if (view) {
-      setActiveView(view);
-      return `Opening ${viewLabels[view]} in the right panel.`;
-    }
-
-    if (command in responses) {
-      return responses[command as keyof typeof responses];
-    }
-
-    return `Command not found: ${command}. Type help to see supported commands.`;
-  }
-
-  function typeResponse(response: string) {
-    if (!response) {
-      return;
-    }
-
-    setEntries((current) => [
-      ...current,
-      { type: "response", value: "", pending: true },
-    ]);
-
-    let index = 0;
-    const timer = window.setInterval(() => {
-      index += 1;
-      setEntries((current) => {
-        const next = [...current];
-        const last = next[next.length - 1];
-
-        if (last?.type === "response" && last.pending) {
-          next[next.length - 1] = {
-            type: "response",
-            value: response.slice(0, index),
-            pending: index < response.length,
-          };
-        }
-
-        return next;
-      });
-
-      if (index >= response.length) {
-        window.clearInterval(timer);
-      }
-    }, 12);
-  }
-
-  function runCommand() {
-    const commandText = input.trim();
-
-    if (!commandText) {
-      setEntries((current) => [...current, { type: "command", value: "" }]);
-      setInput("");
-      return;
-    }
-
-    if (commandText === "clear") {
+    if (parsedCmd === "clear") {
       setEntries([]);
-      setCommandHistory((current) => [...current, commandText]);
+      setCommandHistory((prev) => [...prev, trimmed]);
       setInput("");
-      setHistoryIndex(null);
+      setHistoryIndex(-1);
       return;
     }
 
-    const response = getResponse(commandText);
+    if (parsedCmd === "help") {
+      newEntries.push({
+        type: "response",
+        value: (
+          <div className="space-y-1 text-muted-foreground">
+            <div>Available commands:</div>
+            <div className="grid grid-cols-2 gap-2 mt-2">
+              <div className="text-emerald-400">home</div>
+              <div>Navigate to dashboard</div>
+              <div className="text-emerald-400">books</div>
+              <div>Open library</div>
+              <div className="text-emerald-400">study</div>
+              <div>Open study topics</div>
+              <div className="text-emerald-400">notes</div>
+              <div>Open markdown notes</div>
+              <div className="text-emerald-400">projects</div>
+              <div>Open projects view</div>
+              <div className="text-emerald-400">github</div>
+              <div>Open GitHub stats</div>
+              <div className="text-emerald-400">about</div>
+              <div>Open profile</div>
+              <div className="text-emerald-400">clear</div>
+              <div>Clear terminal output</div>
+            </div>
+          </div>
+        ),
+      });
+    } else if (
+      ["home", "books", "study", "notes", "projects", "github", "contact", "about"].includes(parsedCmd)
+    ) {
+      newEntries.push({
+        type: "response",
+        value: `Navigating to /${parsedCmd === "home" ? "" : parsedCmd}...`,
+      });
+      router.push(parsedCmd === "home" ? "/" : `/${parsedCmd}`);
+    } else {
+      newEntries.push({
+        type: "response",
+        value: (
+          <span className="text-[#ff5f57]">
+            Command not found: {parsedCmd}. Type &apos;help&apos; for available commands.
+          </span>
+        ),
+      });
+    }
 
-    setEntries((current) => [
-      ...current,
-      { type: "command", value: commandText },
-    ]);
-    setCommandHistory((current) => [...current, commandText]);
+    setEntries(newEntries);
+    setCommandHistory((prev) => [...prev, trimmed]);
     setInput("");
-    setHistoryIndex(null);
-    typeResponse(response);
+    setHistoryIndex(-1);
   }
 
-  function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.key === "Enter") {
       event.preventDefault();
-      runCommand();
+      handleCommand(input);
       return;
     }
 
@@ -219,9 +111,9 @@ export function TerminalPanel() {
       event.preventDefault();
       const inputText = input.toLowerCase();
       if (!inputText) return;
-      
-      const matches = supportedCommands.filter((cmd) => cmd.startsWith(inputText));
-      
+
+      const matches = supportedCommands.filter((c) => c.startsWith(inputText));
+
       if (matches.length === 1) {
         setInput(matches[0] + " ");
       } else if (matches.length > 1) {
@@ -236,93 +128,84 @@ export function TerminalPanel() {
 
     if (event.key === "ArrowUp") {
       event.preventDefault();
-      if (!commandHistory.length) {
-        return;
-      }
-
-      const nextIndex =
-        historyIndex === null
-          ? commandHistory.length - 1
-          : Math.max(0, historyIndex - 1);
-
+      if (!commandHistory.length) return;
+      const nextIndex = historyIndex < commandHistory.length - 1 ? historyIndex + 1 : historyIndex;
       setHistoryIndex(nextIndex);
-      setInput(commandHistory[nextIndex]);
-      return;
+      setInput(commandHistory[commandHistory.length - 1 - nextIndex]);
     }
 
     if (event.key === "ArrowDown") {
       event.preventDefault();
-      if (historyIndex === null) {
-        return;
-      }
-
-      const nextIndex = historyIndex + 1;
-
-      if (nextIndex >= commandHistory.length) {
-        setHistoryIndex(null);
+      if (historyIndex <= 0) {
+        setHistoryIndex(-1);
         setInput("");
         return;
       }
-
+      const nextIndex = historyIndex - 1;
       setHistoryIndex(nextIndex);
-      setInput(commandHistory[nextIndex]);
+      setInput(commandHistory[commandHistory.length - 1 - nextIndex]);
     }
   }
 
   return (
-    <aside className="h-[60vh] w-full shrink-0 overflow-hidden rounded-[28px] border border-white/10 bg-[#08090c] shadow-[0_24px_80px_rgba(0,0,0,0.42)] lg:sticky lg:top-[112px] lg:h-[calc(100vh-160px)] lg:w-[360px] lg:self-start">
-      <div className="flex h-12 items-center gap-2 border-b border-white/8 bg-[#111217] px-5">
-        <span className="size-3 rounded-full bg-[#ff5f57] shadow-[0_0_12px_rgba(255,95,87,0.35)]" />
-        <span className="size-3 rounded-full bg-[#ffbd2e] shadow-[0_0_12px_rgba(255,189,46,0.28)]" />
-        <span className="size-3 rounded-full bg-[#28c840] shadow-[0_0_12px_rgba(40,200,64,0.28)]" />
+    <aside className="hidden lg:flex h-[calc(100vh-120px)] w-[360px] shrink-0 flex-col overflow-hidden rounded-2xl border border-border/5 bg-zinc-950/80 shadow-xl sticky top-[96px] self-start backdrop-blur-xl">
+      <div className="flex h-12 shrink-0 items-center gap-2 border-b border-white/5 bg-white/5 px-5">
+        <span className="size-3 rounded-full bg-[#ff5f57] shadow-sm" />
+        <span className="size-3 rounded-full bg-[#ffbd2e] shadow-sm" />
+        <span className="size-3 rounded-full bg-[#28c840] shadow-sm" />
+        <div className="ml-4 flex gap-3 text-xs font-medium text-muted-foreground">
+          <button className="text-foreground">zsh</button>
+          <button className="hover:text-foreground">node</button>
+          <button className="hover:text-foreground">git</button>
+        </div>
       </div>
       <div
-        className="h-[calc(100%-48px)] cursor-text overflow-y-auto px-5 py-6 font-mono text-[13px] leading-6 text-zinc-300 outline-none"
-        onClick={focusInput}
+        className="flex-1 cursor-text overflow-y-auto px-5 py-6 font-mono text-[13px] leading-6 text-foreground outline-none"
+        onClick={() => inputRef.current?.focus()}
         ref={scrollRef}
       >
-        <div className="mb-5 text-zinc-600">Last login: layout preview</div>
-        {entries.map((entry, index) =>
-          entry.type === "command" ? (
-            <div className="mb-2" key={`${entry.type}-${index}`}>
-              <Prompt />
-              <span className="pl-2 text-zinc-100">{entry.value}</span>
+        <div className="mb-5 text-muted-foreground">Last login: {new Date().toLocaleDateString()} on ttys000</div>
+        <div className="space-y-4">
+          {entries.map((entry, i) => (
+            <div key={i}>
+              {entry.type === "command" ? (
+                <div className="flex gap-3">
+                  <span className="text-emerald-400">➜</span>
+                  <span className="text-sky-400">~</span>
+                  <span>{entry.value}</span>
+                </div>
+              ) : (
+                <div className="mt-1">{entry.value}</div>
+              )}
             </div>
-          ) : (
-            <pre
-              className="mb-5 whitespace-pre-wrap break-words pl-0 font-mono text-[13px] leading-6 text-zinc-500"
-              key={`${entry.type}-${index}`}
-            >
-              {entry.value}
-              {entry.pending ? (
-                <span className="ml-1 inline-block h-4 w-2 translate-y-0.5 bg-emerald-400 animate-cursor-blink shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
-              ) : null}
-            </pre>
-          ),
-        )}
-        <label className="flex min-h-6 items-center" aria-label="Terminal input">
-          <Prompt />
-          <span className="min-w-0 flex-1 pl-2 text-zinc-100">
-            {input}
-            <span className="ml-0.5 inline-block h-4 w-2 translate-y-0.5 bg-emerald-400 animate-cursor-blink shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
-          </span>
-          <input
-            autoCapitalize="off"
-            autoComplete="off"
-            autoCorrect="off"
-            className="sr-only"
-            onChange={(event) => setInput(event.target.value)}
-            onKeyDown={handleKeyDown}
-            ref={inputRef}
-            spellCheck={false}
-            value={input}
-          />
-        </label>
+          ))}
+          <div className="flex gap-3">
+            <span className="text-emerald-400">➜</span>
+            <span className="text-sky-400">~</span>
+            <div className="relative flex-1">
+              <input
+                autoCapitalize="off"
+                autoComplete="off"
+                autoCorrect="off"
+                className="w-full bg-transparent text-foreground outline-none"
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                ref={inputRef}
+                spellCheck={false}
+                value={input}
+                autoFocus
+              />
+              <span 
+                className="pointer-events-none absolute left-0 top-0 text-transparent whitespace-pre"
+                aria-hidden="true"
+              >
+                {input}
+                <span className="animate-cursor-blink inline-block h-[15px] w-[8px] translate-y-[2px] bg-muted-foreground/80" />
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </aside>
   );
-}
-
-function Prompt() {
-  return <span className="text-emerald-400">{prompt}</span>;
 }

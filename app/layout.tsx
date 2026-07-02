@@ -51,6 +51,10 @@ export const metadata: Metadata = {
   },
 };
 
+import { ThemeProvider } from "@/components/theme-provider";
+import { SiteNav } from "@/components/site-nav";
+import { TerminalPanel } from "@/components/terminal-panel";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -62,7 +66,21 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable}`}
       suppressHydrationWarning
     >
-      <body>{children}</body>
+      <body className="min-h-screen bg-background text-foreground selection:bg-accent/20">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          disableTransitionOnChange
+        >
+          <SiteNav />
+          <div className="mx-auto flex max-w-[1600px] flex-col items-start gap-9 px-4 pb-12 pt-4 lg:flex-row lg:px-8">
+            <TerminalPanel />
+            <main className="flex-1 w-full min-w-0">
+              {children}
+            </main>
+          </div>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

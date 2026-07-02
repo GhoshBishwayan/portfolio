@@ -7,13 +7,11 @@ import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import { SearchInput } from "@/components/ui/search-input";
-import { usePortfolioView } from "@/components/view-context";
 import type { Note, NotesResponse } from "@/types";
 
 
 
 export function NotesPage() {
-  const { activeNoteQuery } = usePortfolioView();
   const [notes, setNotes] = useState<Note[]>([]);
   const [query, setQuery] = useState("");
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
@@ -44,19 +42,6 @@ export function NotesPage() {
     };
   }, []);
 
-  useEffect(() => {
-    if (!activeNoteQuery || !notes.length) {
-      return;
-    }
-
-    const match = fuzzyFindNote(notes, activeNoteQuery);
-    const timer = window.setTimeout(() => {
-      setSelectedSlug(match?.slug ?? notes[0].slug);
-      setQuery(activeNoteQuery);
-    }, 0);
-
-    return () => window.clearTimeout(timer);
-  }, [activeNoteQuery, notes]);
 
   const visibleNotes = useMemo(() => {
     const normalized = query.trim().toLowerCase();
