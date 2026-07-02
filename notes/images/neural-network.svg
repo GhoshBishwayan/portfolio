@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="420" viewBox="0 0 960 420" role="img" aria-labelledby="title desc">
+  <title id="title">Neural network diagram</title>
+  <desc id="desc">A stylized neural network with connected layers.</desc>
+  <rect width="960" height="420" fill="#111217"/>
+  <g stroke="#334155" stroke-width="2">
+    <path d="M170 95 395 70 620 115 790 95"/>
+    <path d="M170 95 395 170 620 210 790 160"/>
+    <path d="M170 95 395 290 620 305 790 255"/>
+    <path d="M170 210 395 70 620 115 790 160"/>
+    <path d="M170 210 395 170 620 210 790 255"/>
+    <path d="M170 320 395 290 620 305 790 255"/>
+    <path d="M170 320 395 170 620 115 790 95"/>
+  </g>
+  <g>
+    <circle cx="170" cy="95" r="24" fill="#86efac"/>
+    <circle cx="170" cy="210" r="24" fill="#86efac"/>
+    <circle cx="170" cy="320" r="24" fill="#86efac"/>
+    <circle cx="395" cy="70" r="24" fill="#93c5fd"/>
+    <circle cx="395" cy="170" r="24" fill="#93c5fd"/>
+    <circle cx="395" cy="290" r="24" fill="#93c5fd"/>
+    <circle cx="620" cy="115" r="24" fill="#c4b5fd"/>
+    <circle cx="620" cy="210" r="24" fill="#c4b5fd"/>
+    <circle cx="620" cy="305" r="24" fill="#c4b5fd"/>
+    <circle cx="790" cy="95" r="24" fill="#fde68a"/>
+    <circle cx="790" cy="160" r="24" fill="#fde68a"/>
+    <circle cx="790" cy="255" r="24" fill="#fde68a"/>
+  </g>
+  <text x="142" y="378" fill="#94a3b8" font-family="monospace" font-size="18">input</text>
+  <text x="348" y="378" fill="#94a3b8" font-family="monospace" font-size="18">hidden</text>
+  <text x="575" y="378" fill="#94a3b8" font-family="monospace" font-size="18">hidden</text>
+  <text x="760" y="378" fill="#94a3b8" font-family="monospace" font-size="18">output</text>
+</svg>

@@ -1,0 +1,123 @@
+{
+  "page": {
+    "eyebrow": "Learning",
+    "title": "Study Dashboard",
+    "summary": "A focused map of current study topics, references, notes, and learning progress.",
+    "detailsTitle": "Topic Details",
+    "progressLabel": "Progress",
+    "notesLabel": "Notes",
+    "booksLabel": "Books",
+    "resourcesLabel": "Resources",
+    "lastUpdatedLabel": "Last Updated",
+    "overviewTitle": "Overview",
+    "labels": {
+      "notes": "notes",
+      "books": "books",
+      "resources": "resources"
+    },
+    "stats": [
+      {
+        "label": "Topics",
+        "value": "8"
+      },
+      {
+        "label": "Notes",
+        "value": "142"
+      },
+      {
+        "label": "Avg Progress",
+        "value": "58%"
+      }
+    ]
+  },
+  "topics": [
+    {
+      "id": "machine-learning",
+      "title": "Machine Learning",
+      "progress": 68,
+      "notesCount": 24,
+      "books": ["Hands-On Machine Learning", "Pattern Recognition and Machine Learning"],
+      "resources": ["Model evaluation checklist", "Feature engineering notes", "Scikit-learn guide"],
+      "lastUpdated": "Today",
+      "summary": "Supervised learning, model evaluation, features, bias, variance, and practical workflows.",
+      "accent": "#86efac"
+    },
+    {
+      "id": "deep-learning",
+      "title": "Deep Learning",
+      "progress": 52,
+      "notesCount": 18,
+      "books": ["Deep Learning", "Dive into Deep Learning"],
+      "resources": ["Backpropagation walkthrough", "Optimization notes", "Regularization patterns"],
+      "lastUpdated": "Yesterday",
+      "summary": "Representation learning, optimization, regularization, CNNs, RNNs, and training systems.",
+      "accent": "#93c5fd"
+    },
+    {
+      "id": "neural-networks",
+      "title": "Neural Networks",
+      "progress": 61,
+      "notesCount": 16,
+      "books": ["Neural Networks and Deep Learning", "Make Your Own Neural Network"],
+      "resources": ["Activation functions", "Gradient descent diagrams", "Network initialization"],
+      "lastUpdated": "2 days ago",
+      "summary": "Perceptrons, multilayer networks, activations, gradients, and learning dynamics.",
+      "accent": "#c4b5fd"
+    },
+    {
+      "id": "linear-algebra",
+      "title": "Linear Algebra",
+      "progress": 74,
+      "notesCount": 21,
+      "books": ["Linear Algebra Done Right", "Introduction to Linear Algebra"],
+      "resources": ["Eigenvectors refresher", "Matrix decompositions", "Vector space notes"],
+      "lastUpdated": "This week",
+      "summary": "Vectors, matrices, linear maps, eigenvalues, decompositions, and geometric intuition.",
+      "accent": "#f0abfc"
+    },
+    {
+      "id": "calculus",
+      "title": "Calculus",
+      "progress": 49,
+      "notesCount": 13,
+      "books": ["Calculus Made Easy", "Single Variable Calculus"],
+      "resources": ["Derivatives review", "Integration patterns", "Optimization examples"],
+      "lastUpdated": "This week",
+      "summary": "Limits, derivatives, integrals, gradients, optimization, and continuous change.",
+      "accent": "#fdba74"
+    },
+    {
+      "id": "statistics",
+      "title": "Statistics",
+      "progress": 57,
+      "notesCount": 19,
+      "books": ["All of Statistics", "Think Stats"],
+      "resources": ["Probability distributions", "Hypothesis testing", "Bayesian notes"],
+      "lastUpdated": "Last week",
+      "summary": "Probability, inference, distributions, estimation, uncertainty, and experimental thinking.",
+      "accent": "#67e8f9"
+    },
+    {
+      "id": "physics",
+      "title": "Physics",
+      "progress": 41,
+      "notesCount": 11,
+      "books": ["The Feynman Lectures on Physics", "Concepts of Physics"],
+      "resources": ["Mechanics formulas", "Energy intuition", "Electromagnetism primer"],
+      "lastUpdated": "Last week",
+      "summary": "Mechanics, energy, waves, fields, and the physical models behind technical intuition.",
+      "accent": "#fda4af"
+    },
+    {
+      "id": "algorithms",
+      "title": "Algorithms",
+      "progress": 83,
+      "notesCount": 20,
+      "books": ["Introduction to Algorithms", "Algorithm Design Manual"],
+      "resources": ["Graph patterns", "Dynamic programming drills", "Complexity cheat sheet"],
+      "lastUpdated": "This month",
+      "summary": "Data structures, complexity, graphs, dynamic programming, searching, and tradeoff analysis.",
+      "accent": "#fde68a"
+    }
+  ]
+}

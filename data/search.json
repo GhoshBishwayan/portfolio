@@ -1,0 +1,62 @@
+{
+  "projects": [
+    {
+      "id": "transformer-visualizer",
+      "title": "Transformer Visualizer",
+      "description": "Interactive attention-head visualizer for understanding transformer models.",
+      "tags": ["transformer", "attention", "machine learning"]
+    },
+    {
+      "id": "portfolio-terminal",
+      "title": "Portfolio Terminal",
+      "description": "Command-driven portfolio interface with persistent terminal navigation.",
+      "tags": ["terminal", "next.js", "interface"]
+    },
+    {
+      "id": "study-graph",
+      "title": "Study Knowledge Graph",
+      "description": "A graph interface for linking notes, books, and learning resources.",
+      "tags": ["study", "notes", "graph"]
+    }
+  ],
+  "skills": [
+    {
+      "id": "react",
+      "title": "React",
+      "description": "Component architecture, client state, rendering patterns, and UI composition.",
+      "tags": ["frontend", "components", "state"]
+    },
+    {
+      "id": "machine-learning",
+      "title": "Machine Learning",
+      "description": "Model evaluation, practical ML workflows, features, and learning systems.",
+      "tags": ["ml", "transformer", "statistics"]
+    },
+    {
+      "id": "typescript",
+      "title": "TypeScript",
+      "description": "Type-safe application code, API contracts, and maintainable interfaces.",
+      "tags": ["types", "javascript", "frontend"]
+    }
+  ],
+  "blog": [
+    {
+      "id": "understanding-transformers",
+      "title": "Understanding Transformers",
+      "description": "A draft explainer on attention, token embeddings, and transformer blocks.",
+      "tags": ["transformer", "attention", "deep learning"]
+    },
+    {
+      "id": "building-command-interfaces",
+      "title": "Building Command Interfaces",
+      "description": "Notes on terminal-style UX, command history, and searchable navigation.",
+      "tags": ["terminal", "ux", "search"]
+    },
+    {
+      "id": "study-systems",
+      "title": "Study Systems That Last",
+      "description": "A practical approach to books, notes, spaced review, and topic maps.",
+      "tags": ["study", "notes", "learning"]
+    }
+  ]
+}

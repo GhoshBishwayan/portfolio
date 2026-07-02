@@ -1,0 +1,192 @@
+{
+  "page": {
+    "eyebrow": "Digital Library",
+    "title": "Books",
+    "summary": "A quiet shelf for reading progress, study references, and technical notes.",
+    "searchPlaceholder": "Search books, authors, or tags",
+    "allCategoryLabel": "All",
+    "recentlyOpenedTitle": "Recently Opened",
+    "detailsTitle": "Book Details",
+    "emptyState": "No books match this search.",
+    "progressLabel": "Progress",
+    "detailLabels": {
+      "status": "Status",
+      "pages": "Pages",
+      "opened": "Opened",
+      "category": "Category"
+    },
+    "stats": [
+      {
+        "label": "Books",
+        "value": "8"
+      },
+      {
+        "label": "In Progress",
+        "value": "5"
+      },
+      {
+        "label": "Avg Progress",
+        "value": "54%"
+      }
+    ]
+  },
+  "categories": [
+    "Systems",
+    "Frontend",
+    "Design",
+    "Databases",
+    "Writing",
+    "Career"
+  ],
+  "recentlyOpened": [
+    "designing-data-intensive-applications",
+    "refactoring-ui",
+    "the-pragmatic-programmer"
+  ],
+  "books": [
+    {
+      "id": "designing-data-intensive-applications",
+      "title": "Designing Data-Intensive Applications",
+      "author": "Martin Kleppmann",
+      "category": "Systems",
+      "progress": 74,
+      "status": "Reading",
+      "lastOpened": "Today",
+      "pages": 616,
+      "formats": ["PDF", "EPUB"],
+      "tags": ["distributed systems", "storage", "architecture"],
+      "summary": "Reliable data systems, replication, partitioning, transactions, and stream processing.",
+      "cover": {
+        "top": "#315f72",
+        "bottom": "#111827",
+        "accent": "#7dd3fc"
+      }
+    },
+    {
+      "id": "refactoring-ui",
+      "title": "Refactoring UI",
+      "author": "Adam Wathan and Steve Schoger",
+      "category": "Design",
+      "progress": 62,
+      "status": "Reviewing",
+      "lastOpened": "Yesterday",
+      "pages": 252,
+      "formats": ["PDF"],
+      "tags": ["visual design", "ui", "layout"],
+      "summary": "Practical interface design patterns for spacing, hierarchy, color, and polish.",
+      "cover": {
+        "top": "#4f46e5",
+        "bottom": "#111827",
+        "accent": "#c4b5fd"
+      }
+    },
+    {
+      "id": "the-pragmatic-programmer",
+      "title": "The Pragmatic Programmer",
+      "author": "David Thomas and Andrew Hunt",
+      "category": "Career",
+      "progress": 91,
+      "status": "Nearly Done",
+      "lastOpened": "2 days ago",
+      "pages": 352,
+      "formats": ["PDF", "EPUB"],
+      "tags": ["craft", "engineering", "habits"],
+      "summary": "Timeless engineering habits for clearer thinking, better tools, and durable work.",
+      "cover": {
+        "top": "#92400e",
+        "bottom": "#111827",
+        "accent": "#fbbf24"
+      }
+    },
+    {
+      "id": "database-internals",
+      "title": "Database Internals",
+      "author": "Alex Petrov",
+      "category": "Databases",
+      "progress": 38,
+      "status": "Reading",
+      "lastOpened": "This week",
+      "pages": 376,
+      "formats": ["EPUB"],
+      "tags": ["storage engines", "indexes", "distributed data"],
+      "summary": "Storage engines, B-trees, LSM trees, transactions, and distributed database mechanics.",
+      "cover": {
+        "top": "#166534",
+        "bottom": "#0f172a",
+        "accent": "#86efac"
+      }
+    },
+    {
+      "id": "eloquent-javascript",
+      "title": "Eloquent JavaScript",
+      "author": "Marijn Haverbeke",
+      "category": "Frontend",
+      "progress": 47,
+      "status": "Reading",
+      "lastOpened": "Last week",
+      "pages": 472,
+      "formats": ["PDF", "EPUB"],
+      "tags": ["javascript", "language", "browser"],
+      "summary": "JavaScript language fundamentals, browser programming, and expressive problem solving.",
+      "cover": {
+        "top": "#854d0e",
+        "bottom": "#111827",
+        "accent": "#fde68a"
+      }
+    },
+    {
+      "id": "the-design-of-everyday-things",
+      "title": "The Design of Everyday Things",
+      "author": "Don Norman",
+      "category": "Design",
+      "progress": 55,
+      "status": "Reading",
+      "lastOpened": "Last week",
+      "pages": 368,
+      "formats": ["EPUB"],
+      "tags": ["ux", "affordances", "human factors"],
+      "summary": "How understandable objects and interfaces communicate intent through constraints and feedback.",
+      "cover": {
+        "top": "#be123c",
+        "bottom": "#111827",
+        "accent": "#fda4af"
+      }
+    },
+    {
+      "id": "on-writing-well",
+      "title": "On Writing Well",
+      "author": "William Zinsser",
+      "category": "Writing",
+      "progress": 29,
+      "status": "Queued",
+      "lastOpened": "This month",
+      "pages": 336,
+      "formats": ["PDF"],
+      "tags": ["clarity", "editing", "nonfiction"],
+      "summary": "A practical guide to clear nonfiction, revision, rhythm, and writerly judgment.",
+      "cover": {
+        "top": "#334155",
+        "bottom": "#020617",
+        "accent": "#cbd5e1"
+      }
+    },
+    {
+      "id": "system-design-interview",
+      "title": "System Design Interview",
+      "author": "Alex Xu",
+      "category": "Systems",
+      "progress": 36,
+      "status": "Studying",
+      "lastOpened": "This month",
+      "pages": 322,
+      "formats": ["PDF", "EPUB"],
+      "tags": ["scalability", "interviews", "architecture"],
+      "summary": "System design examples covering scale, tradeoffs, caching, queues, and consistency.",
+      "cover": {
+        "top": "#1d4ed8",
+        "bottom": "#020617",
+        "accent": "#93c5fd"
+      }
+    }
+  ]
+}
