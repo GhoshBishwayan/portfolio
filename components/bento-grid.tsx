@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Card, CardHeader } from "@/components/ui/card";
-import { Github, Code2, BookOpen, Clock, Activity, Lightbulb, Link as LinkIcon, Mail, TrendingUp, Quote } from "lucide-react";
+import { Code2, BookOpen, Clock, Activity, Lightbulb, Link as LinkIcon, Mail, TrendingUp, Quote } from "lucide-react";
 import { Book } from "@/lib/books";
 
 const STUDY_SLIDES = [
